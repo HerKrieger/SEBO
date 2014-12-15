@@ -46,7 +46,7 @@ public class wsArticles {
      */
     public wsArticles() {
     }
-    
+    // ceci est un commentaire bidon
     @GET
     @Path("/getArticleByCodeBarre")
     @Produces("application/xml")
