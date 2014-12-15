@@ -55,7 +55,8 @@ public class Catalogue {
     
     /**
      * Permet d'obtenir la liste des articles à réapprovisionner
-     * @return 
+     * @return la liste de tous les articles dont la quantité 
+     * en stock est = ou inférieure à la quantité de réappro
      */
     public Retour<ArrayList<Article>> getListeEnDessousSeuil()
     {
@@ -65,18 +66,20 @@ public class Catalogue {
         try
         {
             //ouverture de la connexion
-        Connection co = Connexion.getConnection();
-            
-        //requete sql
-        Statement st = co.createStatement();
-        ResultSet resultat = st.executeQuery("SELECT idArticle FROM Article WHERE Article.quantiteEnStock <= Article.seuilDeReappro" );
-        
-            while(resultat.next())
-            {
-                Article artTemp = new Article();
-                artTemp.fillArticleById(resultat.getInt("idArticle"));
-                v.add(artTemp);       
-            }
+            Connection co = Connexion.getConnection();
+
+            //requete sql
+            Statement st = co.createStatement();
+            ResultSet resultat = st.executeQuery("SELECT idArticle FROM Article WHERE Article.quantiteEnStock <= Article.seuilDeReappro" );
+
+                //remplissage de la liste
+                while(resultat.next())
+                {
+                    Article artTemp = new Article();
+                    artTemp.fillArticleById(resultat.getInt("idArticle"));
+                    v.add(artTemp);       
+                }
+                
             leRetour.setResultat(v);
         }
         catch(Exception e)
@@ -88,6 +91,10 @@ public class Catalogue {
         return leRetour;
     }
     
+    /**
+     * Permet d'obtenir la liste de tous les articles
+     * @return la liste de tous les articles
+     */
     public Retour<ArrayList<Article>> getListeArticle()
     {
         Retour leRetour=null;
@@ -104,7 +111,8 @@ public class Catalogue {
                     + " Article.idCategorie, prix, auteur, editeur, [description], lienPhoto, "
                     + " seuilDeReappro, etat, quantiteEnStock, EAN13 FROM Article, Genre, Categorie "
                     + " WHERE Article.idCategorie = Categorie.idCategorie AND Article.idGenre = Genre.idGenre");
-                        
+            
+            //création de la liste
             while (resultat.next())
             {
                 articles.add(new Article(resultat.getInt("idArticle") ,new Genre(resultat.getInt("idGenre"), resultat.getString("Genre")), resultat.getFloat("prix"),
@@ -112,8 +120,10 @@ public class Catalogue {
                                            resultat.getString("description"),new Categorie(resultat.getInt("idCategorie"), resultat.getString("categorie")),
                                            resultat.getString("lienPhoto"),resultat.getInt("seuilDeReappro"), resultat.getInt("etat"), resultat.getInt("quantiteEnStock"),
                                            resultat.getString("EAN13")));  
-            }
+            } 
+            
             leRetour = new Retour(articles,0,"liste créée avec succès");
+            
             //fermeture de la connexion
             st.close();
             co.close();
@@ -126,6 +136,10 @@ public class Catalogue {
         return leRetour;
     }
     
+    /**
+     * permet d'obtenir la liste des articles en promotion à la date du jour
+     * @return la liste d'articles en promotion à la date du jour
+     */
     public Retour<ArrayList<Article>> getListeArticlesEnPromotion()
     {
         Retour leRetour = null;
@@ -146,7 +160,10 @@ public class Catalogue {
         return leRetour;
     }
        
-    
+    /**
+     * Permet d'obtenir les articles sans promotions à la date du jour
+     * @return une liste d'articles sans promotion à la date du jour
+     */
     public Retour<ArrayList<Article>> getListeArticlesSansPromotion()
     {
         Retour leRetour = null;
