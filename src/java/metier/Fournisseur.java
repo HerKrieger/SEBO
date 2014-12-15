@@ -120,7 +120,7 @@ public class Fournisseur
             //requete sql
             Statement stFournisseur = co.createStatement();
             ResultSet resultatFournisseur = stFournisseur.executeQuery("SELECT * FROM Fournisseur "
-                    + " WHERE idFournisseur="+idFournisseur);
+                    + "WHERE idFournisseur="+idFournisseur);
             while (resultatFournisseur.next())
             {
                 fournisseur = new Fournisseur(resultatFournisseur.getInt("idFournisseur"), resultatFournisseur.getString("nom"), resultatFournisseur.getString("email"), resultatFournisseur.getString("telephone"), resultatFournisseur.getString("adresse"), resultatFournisseur.getString("codePostal"), resultatFournisseur.getString("ville"));            
