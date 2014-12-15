@@ -6,6 +6,9 @@
 
 package metier;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 
 /**
@@ -99,5 +102,36 @@ public class Promotion {
         this.remisePromo = remisePromo;
     }
     
-    
+    public Boolean isEnPromotion(int idArticle)
+    {
+        Boolean ok = false;
+        
+        try
+        {
+            //ouverture de la connexion
+            Connection co = Connexion.getConnection();
+
+            //requete sql
+            String requete = "SELECT Article.nom, Genre.nom as Genre, Categorie.nom as Categorie, Article.idArticle, Article.idGenre,\n" +
+"                    Article.idCategorie, prix, auteur, editeur, [description], lienPhoto,\n" +
+"                    seuilDeReappro, etat, quantiteEnStock, EAN13 FROM Article, Genre, Categorie,Promotion\n" +
+"                     WHERE Article.idCategorie = Categorie.idCategorie \n" +
+"					 AND Article.idGenre = Genre.idGenre\n" +
+"					 AND Article.idArticle=Promotion.idArticle\n" +
+"					 AND dateDebut<GETDATE() and dateFin>GETDATE() and Article.idArticle=" + idArticle;
+            Statement st = co.createStatement();        
+            ResultSet resultat = st.executeQuery(requete);
+
+            if(resultat!=null)
+            {
+                ok = true;
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
+        
+        return ok;
+    }
 }

@@ -454,7 +454,10 @@ public class Article
                 setQuantiteEnStock(resultat.getInt("quantiteEnStock"));
                 setSeuilStockMin(resultat.getInt("seuilDeReappro"));
                 setTitreArticle(resultat.getString("nom"));                   
-            }           
+            }  
+            //fermeture de la connexion
+            st.close();
+            co.close();
         }
         catch (Exception e)
         {
@@ -462,5 +465,41 @@ public class Article
         }
     }
     
+    
+    public Boolean isEnPromotion()
+    {
+        Boolean ok = false;
+        
+        try
+        {
+            //ouverture de la connexion
+            Connection co = Connexion.getConnection();
+
+            //requete sql
+            String requete = "SELECT Article.nom, Genre.nom as Genre, Categorie.nom as Categorie, Article.idArticle, Article.idGenre, " +
+"                    Article.idCategorie, prix, auteur, editeur, [description], lienPhoto, " +
+"                    seuilDeReappro, etat, quantiteEnStock, EAN13 FROM Article, Genre, Categorie,Promotion " +
+"                     WHERE Article.idCategorie = Categorie.idCategorie " +
+"					 AND Article.idGenre = Genre.idGenre " +
+"					 AND Article.idArticle=Promotion.idArticle " +
+"					 AND dateDebut<GETDATE() and dateFin>GETDATE() and Article.idArticle=" + this.getIdArticle();
+            Statement st = co.createStatement();        
+            ResultSet resultat = st.executeQuery(requete);
+
+            if(resultat.next())
+            {
+                ok = true;
+            }
+            //fermeture de la connexion
+            st.close();
+            co.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println("article inexistant ou invalide : "+e.getMessage());
+        }
+        
+        return ok;
+    }
     
 }
