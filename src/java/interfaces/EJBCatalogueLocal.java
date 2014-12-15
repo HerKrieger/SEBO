@@ -33,4 +33,10 @@ public interface EJBCatalogueLocal {
     
     Retour<ArrayList<Article>> getListeEnDessousSeuil();
     
+    Retour<ArrayList<Article>> getListeArticle();
+    
+    Retour<ArrayList<Article>> getListeArticlesEnPromotion();
+    
+    Retour<ArrayList<Article>> getListeArticlesSansPromotion();
+    
 }

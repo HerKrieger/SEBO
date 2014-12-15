@@ -57,6 +57,24 @@ public class EJBCatalogue implements EJBCatalogueLocal {
     public Retour<ArrayList<Article>> getListeEnDessousSeuil() {
         return catalogue.getListeEnDessousSeuil();
     }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticle() 
+    {
+        return catalogue.getListeArticle();
+    }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticlesEnPromotion() 
+    {
+        return catalogue.getListeArticlesEnPromotion();
+    }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticlesSansPromotion() 
+    {
+        return catalogue.getListeArticlesSansPromotion();
+    }
     
     
     

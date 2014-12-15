@@ -34,5 +34,7 @@ public interface EJBArticleLocal
     boolean isEnDessousSeuilMini() throws Exception;
     Article getArticleByCodeBarre(String codeBarre);
     Retour<Integer> ajouterQuantiteArticleAuStock(int idArticle, int quantiteAAJouter);
+    void fillArticleById(int idArticle);
+    Boolean isEnPromotion();
     
 }
