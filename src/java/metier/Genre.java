@@ -68,7 +68,7 @@ public class Genre
     {
         Retour              leRetour;
         
-        if (this.getNomGenre() != null && this.getNomGenre() != "")
+        if (this.getNomGenre() != null && !this.getNomGenre().equals(""))
         {
             try 
             {            

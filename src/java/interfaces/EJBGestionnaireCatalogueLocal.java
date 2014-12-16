@@ -27,7 +27,7 @@ public interface    EJBGestionnaireCatalogueLocal
     
     Retour          modifierArticle(Article art);
     
-    Retour          creerCategorie(Categorie categ);
+    Retour<Categorie>   creerCategorie(String categ);
     
     Retour<Genre>   creerGenre(String genre);
 }

@@ -40,9 +40,15 @@ public class                EJBGestionnaireCatalogue implements EJBGestionnaireC
     }
 
     @Override
-    public Retour   creerCategorie(Categorie categ)
+    public Retour<Categorie>    creerCategorie(String categ)
     {
-        return (gestion.creerCategorie(categ));
+        Retour                  ret;
+        
+        if (!Verification.estNomPropre(categ))
+            ret = new Retour(-1, "Le nom de la categorie n'est pas valide.");
+        else
+            ret = gestion.creerCategorie(new Categorie(categ));
+        return (ret);
     }
 
     @Override
