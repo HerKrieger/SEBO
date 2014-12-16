@@ -68,6 +68,16 @@ public class EJBCatalogue implements EJBCatalogueLocal {
     public Retour<ArrayList<Article>> getListeArticlesSansPromotion() {
         return catalogue.getListeArticlesSansPromotion();
     }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticle() {
+        return catalogue.getListeArticle();
+    }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticle(String nomCategorie, String nomGenre) {
+        return catalogue.getListeArticle(nomCategorie, nomGenre);
+    }
     
     
     

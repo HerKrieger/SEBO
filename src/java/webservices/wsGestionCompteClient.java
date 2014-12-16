@@ -6,9 +6,6 @@
 package webservices;
 
 import interfaces.EJBCompteClientLocal;
-import java.io.StringWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -16,18 +13,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import metier.CompteClient;
 import metier.Retour;
 import metier.XmlCreator;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * REST Web Service

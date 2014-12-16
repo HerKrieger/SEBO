@@ -13,6 +13,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import metier.Article;
 import metier.Retour;
 import metier.XmlCreator;
@@ -34,6 +35,26 @@ public class wsCatalogue
      * Creates a new instance of wsCatalogue
      */
     public wsCatalogue() {
+    }
+    
+    @GET
+    @Path("/getListeArticle")
+    @Produces("application/xml")
+    public String getListeArticle()
+    {
+        System.out.println("getListeArticle()");
+        Retour<ArrayList<Article>> retourEjb = ejbCatalogue.getListeArticle();
+        return XmlCreator.creerXmlListeArticles(retourEjb);
+    }
+    
+    @GET
+    @Path("/getListeArticleFiltree")
+    @Produces("application/xml")
+    public String getListeArticleFiltree(@QueryParam("nomCategorie") String nomCategorie, @QueryParam("nomGenre") String nomGenre)
+    {
+        System.out.println("getListeArticle(nomCategorie = " + nomCategorie + ", nomGenre = " + nomGenre + ")");
+        Retour<ArrayList<Article>> retourEjb = ejbCatalogue.getListeArticle(nomCategorie, nomGenre);
+        return XmlCreator.creerXmlListeArticles(retourEjb);
     }
 
     @GET

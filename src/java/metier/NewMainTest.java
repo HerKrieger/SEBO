@@ -80,6 +80,5 @@ public class NewMainTest {
         
         Fournisseur fourn = Fournisseur.fillFournisseurById(1);
         System.out.println(fourn.getAdresse());
-       
     }
 }

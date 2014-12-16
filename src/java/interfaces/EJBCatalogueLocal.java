@@ -31,6 +31,10 @@ public interface EJBCatalogueLocal {
 
     void creerCategorie(String libelleCategorie);
     
+    Retour<ArrayList<Article>> getListeArticle();
+    
+    Retour<ArrayList<Article>> getListeArticle(String nomCategorie, String nomGenre);
+    
     Retour<ArrayList<Article>> getListeEnDessousSeuil();
     
     Retour<ArrayList<Article>> getListeArticlesEnPromotion();

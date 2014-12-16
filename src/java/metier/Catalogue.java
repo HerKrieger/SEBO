@@ -65,11 +65,11 @@ public class Catalogue {
         try
         {
             //ouverture de la connexion
-        Connection co = Connexion.getConnection();
-            
-        //requete sql
-        Statement st = co.createStatement();
-        ResultSet resultat = st.executeQuery("SELECT idArticle FROM Article WHERE Article.quantiteEnStock <= Article.seuilDeReappro" );
+            Connection co = Connexion.getConnection();
+
+            //requete sql
+            Statement st = co.createStatement();
+            ResultSet resultat = st.executeQuery("SELECT idArticle FROM Article WHERE Article.quantiteEnStock <= Article.seuilDeReappro" );
         
             while(resultat.next())
             {
@@ -98,7 +98,7 @@ public class Catalogue {
     
     public Retour<ArrayList<Article>> getListeArticle()
     {
-        Retour leRetour=null;
+        Retour leRetour = null;
         articles = new ArrayList<Article>();
         
         try
@@ -129,6 +129,44 @@ public class Catalogue {
         catch (Exception e)
         {
             System.out.println("article inexistant ou invalide : "+e.getMessage());
+        }
+        
+        return leRetour;
+    }
+    
+    public Retour<ArrayList<Article>> getListeArticle(String nomCategorie, String nomGenre)
+    {
+        Retour<ArrayList<Article>> leRetour;
+        articles = new ArrayList<>();
+        boolean categorieRenseignee = (nomCategorie != null && !"".equals(nomCategorie));
+        boolean genreRenseigne = (nomGenre != null && !"".equals(nomGenre));
+        String requete;
+        
+        if(categorieRenseignee && genreRenseigne)
+        {
+            requete = "SELECT idArticle FROM Article,Categorie,Genre"
+                    + " WHERE Article.idCategorie = Categorie.idCategorie AND Article.idGenre = Genre.idGenre AND Categorie.nom = " + nomCategorie + " AND Genre.nom = " + nomGenre;
+            articles = requeteSelectArticle(requete);
+            leRetour = new Retour<>(articles, 0, "liste filtrée par catégorie et par genre");
+        }
+        else if(categorieRenseignee && !genreRenseigne)
+        {
+            requete = "SELECT idArticle FROM Article,Categorie"
+                    + "Article.idCategorie = Categorie.idCategorie AND Categorie.nom = " + nomCategorie;
+            articles = requeteSelectArticle(requete);
+            leRetour = new Retour<>(articles, 0, "liste filtrée par catégorie");
+        }
+        else if(!categorieRenseignee && genreRenseigne)
+        {
+            requete = "SELECT idArticle FROM Article,Genre"
+                    + "Article.idGenre = Genre.idGenre AND Genre.nom = " + nomGenre;
+            articles = requeteSelectArticle(requete);
+            leRetour = new Retour<>(articles, 0, "liste filtrée par genre");
+        }
+        else
+        {
+            articles = this.getListeArticle().getResultat();
+            leRetour = new Retour<>(articles, 1, "liste non filtrée");
         }
         
         return leRetour;
@@ -183,6 +221,34 @@ public class Catalogue {
         {
             retour = retour + art+"\n";
         }      
+        
+        return retour;
+    }
+
+    private ArrayList<Article> requeteSelectArticle(String requete)
+    {
+        ArrayList<Article> retour = new ArrayList<>();
+        
+        try
+        {
+            //ouverture de la connexion
+        Connection co = Connexion.getConnection();
+            
+        //requete sql
+        Statement st = co.createStatement();
+        ResultSet resultat = st.executeQuery(requete);
+        
+            while(resultat.next())
+            {
+                Article artTemp = new Article();
+                artTemp.fillArticleById(resultat.getInt("idArticle"));
+                retour.add(artTemp);       
+            }
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(CompteClient.class.getName()).log(Level.SEVERE, null, e);
+        }
         
         return retour;
     }
