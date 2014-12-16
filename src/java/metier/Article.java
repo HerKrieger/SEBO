@@ -315,9 +315,10 @@ public class Article
      * @param codeBarre contient le num du code barre correspondant à un article
      * @return renvoie un article
      */
-    public Article getArticleByCodeBarre(String codeBarre)
+    public Retour<Article> getArticleByCodeBarre(String codeBarre)
     {
-        Article leRetour = null;
+        Retour<Article> leRetour;
+        Article art = null;
         
         try
         {
@@ -332,18 +333,26 @@ public class Article
                     + "WHERE Article.idCategorie = Categorie.idCategorie AND Article.idGenre = Genre.idGenre AND Article.EAN13="+codeBarre);
             while (resultat.next())
             {
-                leRetour = new Article(resultat.getInt("idArticle") ,new Genre(resultat.getInt("idGenre"), resultat.getString("Genre")), resultat.getFloat("prix"),
+                art = new Article(resultat.getInt("idArticle") ,new Genre(resultat.getInt("idGenre"), resultat.getString("Genre")), resultat.getFloat("prix"),
                                            resultat.getString("nom"), resultat.getString("auteur"), resultat.getString("editeur"),
                                            resultat.getString("description"),new Categorie(resultat.getInt("idCategorie"), resultat.getString("categorie")),
                                            resultat.getString("lienPhoto"),resultat.getInt("seuilDeReappro"), resultat.getInt("etat"), resultat.getInt("quantiteEnStock"),
                                            resultat.getString("EAN13"));              
                         
             }
-           
         }
         catch (Exception e)
         {
             System.out.println("article inexistant ou invalide : "+e.getMessage());
+        }
+        
+        if(art == null)
+        {
+            leRetour = new Retour<>(1, "Aucun article trouvé");
+        }
+        else
+        {
+            leRetour = new Retour<>(art, 0, "Article trouvé");
         }
         
         return leRetour;
@@ -382,9 +391,9 @@ public class Article
         return artStr;
     }
     
-    public Retour<Integer> modifierQuantiteArticleAuStock(int quantiteAAjouter)
+    public Retour<Article> modifierQuantiteArticleAuStock(int quantiteAAjouter)
     {
-        Retour leRetour = null;
+        Retour<Article> leRetour;
         
         try
         {
@@ -406,8 +415,12 @@ public class Article
             String lMsgRetour = lStat.getString(4);
             Logger.getLogger(CompteClient.class.getName()).log(Level.INFO, ">>>>>>>>>>>>>>>>>>>>>>>>>>" + lMsgRetour);
             
+            if(lCodeRetour == 0)
+            {
+                this.setQuantiteEnStock(this.getQuantiteEnStock() + quantiteAAjouter);
+            }
             
-            leRetour = new Retour<Integer>(new Integer(this.getQuantiteEnStock() + quantiteAAjouter),lCodeRetour, lMsgRetour);
+            leRetour = new Retour<>(this, lCodeRetour, lMsgRetour);
             
             //fermeture de la connexion
             lStat.close();

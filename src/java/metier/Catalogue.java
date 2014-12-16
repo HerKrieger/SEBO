@@ -60,7 +60,7 @@ public class Catalogue {
     public Retour<ArrayList<Article>> getListeEnDessousSeuil()
     {
         Retour leRetour = null;
-        ArrayList<Article> v = null;
+        ArrayList<Article> v = new ArrayList<Article>();
         
         try
         {
@@ -77,7 +77,15 @@ public class Catalogue {
                 artTemp.fillArticleById(resultat.getInt("idArticle"));
                 v.add(artTemp);       
             }
-            leRetour.setResultat(v);
+            
+            if(v.isEmpty())
+            {
+                leRetour = new Retour(v,0,"Aucun article à réapprovisionner");
+            }
+            else
+            {
+                leRetour = new Retour(v,0,"Liste des articles à réapprovisionner");
+            }
         }
         catch(Exception e)
         {

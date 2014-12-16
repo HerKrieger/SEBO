@@ -99,14 +99,15 @@ public class EJBArticle implements EJBArticleLocal
     }
 
     @Override
-    public Article getArticleByCodeBarre(String codeBarre) 
+    public Retour<Article> getArticleByCodeBarre(String codeBarre) 
     {
         return art.getArticleByCodeBarre(codeBarre);
     }
 
     @Override
-    public Retour<Integer> ajouterQuantiteArticleAuStock(int idArticle, int quantiteAAjouter) 
+    public Retour<Article> ajouterQuantiteArticleAuStock(int idArticle, int quantiteAAjouter) 
     {
+        art = new Article();
         art.fillArticleById(idArticle);
         return art.modifierQuantiteArticleAuStock(quantiteAAjouter);
     }

@@ -6,6 +6,7 @@
 package Ejb;
 
 import interfaces.EJBCatalogueLocal;
+import interfaces.EJBCategorieLocal;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -19,8 +20,8 @@ import metier.Retour;
  */
 @Stateless
 public class EJBCatalogue implements EJBCatalogueLocal {
-    @EJB EJBCategorie categorie;
-    @EJB EJBCatalogue catalogue;
+    @EJB EJBCategorieLocal categorie;
+    Catalogue catalogue = new Catalogue();
 
     @Override
     public void commencerReduction(Article article, float tauxReduction) {
@@ -56,6 +57,16 @@ public class EJBCatalogue implements EJBCatalogueLocal {
     @Override
     public Retour<ArrayList<Article>> getListeEnDessousSeuil() {
         return catalogue.getListeEnDessousSeuil();
+    }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticlesEnPromotion() {
+        return catalogue.getListeArticlesEnPromotion();
+    }
+
+    @Override
+    public Retour<ArrayList<Article>> getListeArticlesSansPromotion() {
+        return catalogue.getListeArticlesSansPromotion();
     }
     
     

@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(webservices.wsArticles.class);
+        resources.add(webservices.wsCatalogue.class);
         resources.add(webservices.wsGestionCompteClient.class);
     }
     

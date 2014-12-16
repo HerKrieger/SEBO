@@ -25,6 +25,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import metier.CompteClient;
 import metier.Retour;
+import metier.XmlCreator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -56,57 +57,10 @@ public class wsGestionCompteClient
     {
         Retour<CompteClient> retourEjb = ejbCompteClient.creerCompteClient(nom, prenom, telephone, email, motDePasse, numeroRue, nomRue, codePostal, ville);
         
-        return creerXmlRetourInscription(retourEjb);
+        return XmlCreator.creerXmlCompteClient(retourEjb);
     }
 
-    private String creerXmlRetourInscription(Retour<CompteClient> paramRetour)
-    {
-        String retour = null;
-        
-        try
-        {
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            Element racine = doc.createElement("racine");
-            doc.appendChild(racine);
-            
-            Element rapport = doc.createElement("rapport");
-            
-            Element codeRetour = doc.createElement("codeRetour");
-            codeRetour.appendChild(doc.createTextNode(Integer.toString(paramRetour.getIdRetour())));
-            rapport.appendChild(codeRetour);
-            Element messageRetour = doc.createElement("messageRetour");
-            messageRetour.appendChild(doc.createTextNode(paramRetour.getMessageRetour()));
-            rapport.appendChild(messageRetour);
-            
-            racine.appendChild(rapport);
-            
-            Element cptClient = doc.createElement("compteClient");
-            
-            Element idClient = doc.createElement("idClient");
-            idClient.appendChild(doc.createTextNode(Integer.toString(paramRetour.getResultat().getIdCompteClient())));
-            cptClient.appendChild(idClient);
-            
-            racine.appendChild(cptClient);
-            
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            
-            StringWriter resultSW = new StringWriter();
-            
-            StreamResult result = new StreamResult(resultSW);
-            
-            transformer.transform(source, result);
-            
-            retour = resultSW.toString();
-        }
-        catch (ParserConfigurationException | TransformerException ex)
-        {
-            Logger.getLogger(wsGestionCompteClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return retour;
-    }
+    
     
     
 }
