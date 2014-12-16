@@ -44,8 +44,8 @@ public class    GestionnaireCatalogue extends CompteSalarie
         return (null);
     }
     
-    public Retour   creerGenre(Genre genre)
+    public Retour<Genre>   creerGenre(Genre genre)
     {
-        return (null);
+        return (genre.creerGenre());
     }
 }
