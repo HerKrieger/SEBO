@@ -17,17 +17,17 @@ import metier.Retour;
 @Local
 public interface    EJBGestionnaireCatalogueLocal
 {
-    Retour   recupererArticles();
+    Retour          recupererArticles();
     
-    Retour   recupererGenres();
+    Retour          recupererGenres();
     
-    Retour   recupererCategories();
+    Retour          recupererCategories();
     
-    Retour   ajouterArticle(Article art);
+    Retour          ajouterArticle(Article art);
     
-    Retour   modifierArticle(Article art);
+    Retour          modifierArticle(Article art);
     
-    Retour   creerCategorie(Categorie categ);
+    Retour<Categorie>   creerCategorie(String categ);
     
-    Retour   creerGenre(Genre genre);
+    Retour<Genre>   creerGenre(String genre);
 }

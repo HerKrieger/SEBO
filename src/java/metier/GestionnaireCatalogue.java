@@ -39,13 +39,13 @@ public class    GestionnaireCatalogue extends CompteSalarie
         return (art.updateIntoBDD());
     }
     
-    public Retour   creerCategorie(Categorie categ)
+    public Retour<Categorie>    creerCategorie(Categorie categ)
     {
-        return (null);
+        return (categ.creerCategorie());
     }
     
-    public Retour   creerGenre(Genre genre)
+    public Retour<Genre>   creerGenre(Genre genre)
     {
-        return (null);
+        return (genre.creerGenre());
     }
 }

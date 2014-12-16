@@ -111,4 +111,16 @@ public class EJBArticle implements EJBArticleLocal
         art.fillArticleById(idArticle);
         return art.modifierQuantiteArticleAuStock(quantiteAAjouter);
     }
+
+    @Override
+    public void fillArticleById(int idArticle) 
+    {
+        art.fillArticleById(idArticle);
+    }
+
+    @Override
+    public Boolean isEnPromotion() 
+    {
+        return art.isEnPromotion();
+    }
 }

@@ -32,7 +32,9 @@ public interface EJBArticleLocal
     Article.EtatArticle getEtatArticle();
     void ajouterPanier();
     boolean isEnDessousSeuilMini() throws Exception;
-    Retour<Article> getArticleByCodeBarre(String codeBarre);
-    Retour<Article> ajouterQuantiteArticleAuStock(int idArticle, int quantiteAAJouter);
+    Article getArticleByCodeBarre(String codeBarre);
+    Retour<Integer> ajouterQuantiteArticleAuStock(int idArticle, int quantiteAAJouter);
+    void fillArticleById(int idArticle);
+    Boolean isEnPromotion();
     
 }

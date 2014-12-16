@@ -4,7 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -478,7 +477,10 @@ public class Article
         }
     }
     
-    
+    /**
+     * Permet de savoir si un article est en promotion
+     * @return true si un article est en promotion
+     */
     public Boolean isEnPromotion()
     {
         Boolean ok = false;
