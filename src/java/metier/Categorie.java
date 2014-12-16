@@ -91,14 +91,14 @@ public class Categorie
                 {
                     int idCategCree = lStat.getInt(2);
                     this.setIdCategorie(idCategCree);
-                    leRetour = new Retour<Categorie>(this, codeRetour, messageRetour);
+                    leRetour = new Retour(this, codeRetour, messageRetour);
                 }
 
                 //fermeture de la connexion
                 lStat.close();
                 lCon.close();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 leRetour = new Retour(-1, ex.toString());
             }

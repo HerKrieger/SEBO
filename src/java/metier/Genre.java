@@ -92,7 +92,7 @@ public class Genre
                 {
                     int idGenreCree = lStat.getInt(2);
                     this.setIdGenre(idGenreCree);
-                    leRetour = new Retour<Genre>(this, codeRetour, messageRetour);
+                    leRetour = new Retour(this, codeRetour, messageRetour);
                 }
 
                 //fermeture de la connexion
